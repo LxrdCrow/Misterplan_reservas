@@ -1,0 +1,26 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+/vendor/
+
+# Logs
+*.log
+/logs/
+
+# IDE and operating system
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Test and coverage artifacts
+/coverage/
+.phpunit.cache/
