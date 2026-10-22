@@ -14,7 +14,7 @@ la separación de responsabilidades y la calidad del código.
 ## Tecnologías
 
 - PHP nativo
-- MySQL / MariaDB
+- MySQL 
 - Twig
 - JavaScript
 - Git
