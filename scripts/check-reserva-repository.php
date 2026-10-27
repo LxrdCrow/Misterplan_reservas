@@ -34,10 +34,37 @@ try {
             $reserva['fecha_entrada']
         );
     }
+
+    echo PHP_EOL . "Prueba de búsqueda por ID:" . PHP_EOL;
+
+    $reserva = $repository->findById(2);
+
+    if ($reserva === null) {
+        throw new RuntimeException(
+            'No se encontró la reserva de prueba con ID 2.'
+        );
+    }
+
+    printf(
+        "Reserva encontrada: #%d | %s | %s\n",
+        (int) $reserva['id'],
+        $reserva['nombre_huesped'],
+        $reserva['estado']
+    );
+
+    $reservaInexistente = $repository->findById(9999);
+
+    if ($reservaInexistente !== null) {
+        throw new RuntimeException(
+            'Se encontró una reserva inesperada con ID 9999.'
+        );
+    }
+
+    echo "Reserva inexistente: resultado null correcto.\n";
 } catch (Throwable $exception) {
     fwrite(
         STDERR,
-        "Error al consultar las reservas: {$exception->getMessage()}\n"
+        "Error durante la prueba del repositorio: {$exception->getMessage()}\n"
     );
 
     exit(1);
