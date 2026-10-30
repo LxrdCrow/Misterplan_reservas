@@ -33,6 +33,38 @@ try {
             $reserva['estado'],
             $reserva['fecha_entrada']
         );
+
+
+    echo PHP_EOL . "Prueba de filtros:" . PHP_EOL;
+
+    $reservasConfirmadas = $repository->findByFilters([
+        'estado' => 'confirmada',
+    ]);
+
+    printf(
+        "Reservas confirmadas: %d\n",
+        count($reservasConfirmadas)
+    );
+
+    $reservasPorNombre = $repository->findByFilters([
+        'nombre_huesped' => 'García',
+    ]);
+
+    printf(
+        "Reservas cuyo nombre contiene García: %d\n",
+        count($reservasPorNombre)
+    );
+
+    $reservasCombinadas = $repository->findByFilters([
+        'estado' => 'confirmada',
+        'nombre_huesped' => 'García',
+    ]);
+
+    printf(
+        "Reservas confirmadas cuyo nombre contiene García: %d\n",
+        count($reservasCombinadas)
+    );
+
     }
 
     echo PHP_EOL . "Prueba de búsqueda por ID:" . PHP_EOL;
