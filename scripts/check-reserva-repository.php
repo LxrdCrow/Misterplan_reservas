@@ -33,7 +33,7 @@ try {
             $reserva['estado'],
             $reserva['fecha_entrada']
         );
-
+    }
 
     echo PHP_EOL . "Prueba de filtros:" . PHP_EOL;
 
@@ -64,8 +64,6 @@ try {
         "Reservas confirmadas cuyo nombre contiene García: %d\n",
         count($reservasCombinadas)
     );
-
-    }
 
     echo PHP_EOL . "Prueba de búsqueda por ID:" . PHP_EOL;
 

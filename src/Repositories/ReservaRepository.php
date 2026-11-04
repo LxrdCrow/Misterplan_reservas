@@ -156,4 +156,124 @@ final class ReservaRepository
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    /**
+     * Crea una nueva reserva.
+     *
+     * @param array{
+     *     nombre_huesped: string,
+     *     email_huesped: string,
+     *     nombre_alojamiento: string,
+     *     fecha_entrada: string,
+     *     fecha_salida: string,
+     *     importe: string,
+     *     notas: string|null
+     * } $data
+     */
+    public function create(array $data): int
+    {
+        $sql = '
+            INSERT INTO reserva (
+                nombre_huesped,
+                email_huesped,
+                nombre_alojamiento,
+                fecha_entrada,
+                fecha_salida,
+                importe,
+                notas
+            ) VALUES (
+                :nombre_huesped,
+                :email_huesped,
+                :nombre_alojamiento,
+                :fecha_entrada,
+                :fecha_salida,
+                :importe,
+                :notas
+            )
+        ';
+
+        $statement = $this->pdo->prepare($sql);
+
+        $statement->bindValue(
+            ':nombre_huesped',
+            $data['nombre_huesped'],
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':email_huesped',
+            $data['email_huesped'],
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':nombre_alojamiento',
+            $data['nombre_alojamiento'],
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':fecha_entrada',
+            $data['fecha_entrada'],
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':fecha_salida',
+            $data['fecha_salida'],
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':importe',
+            $data['importe'],
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':notas',
+            $data['notas'],
+            $data['notas'] === null
+                ? PDO::PARAM_NULL
+                : PDO::PARAM_STR
+        );
+
+        $statement->execute();
+
+        return (int) $this->pdo->lastInsertId();
+    }
+
+    /**
+     * Actualiza el estado de una reserva.
+     *
+     * Devuelve true si se ha modificado una fila.
+     */
+    public function updateStatus(int $id, string $estado): bool
+    {
+        $sql = '
+            UPDATE reserva
+            SET estado = :estado
+            WHERE id = :id
+        ';
+
+        $statement = $this->pdo->prepare($sql);
+
+        $statement->bindValue(
+            ':estado',
+            $estado,
+            PDO::PARAM_STR
+        );
+
+        $statement->bindValue(
+            ':id',
+            $id,
+            PDO::PARAM_INT
+        );
+
+        $statement->execute();
+
+        return $statement->rowCount() > 0;
+    }
+
+
 }
